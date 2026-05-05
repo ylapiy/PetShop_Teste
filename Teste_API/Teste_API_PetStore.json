@@ -21,7 +21,27 @@
                   "listen": "test",
                   "script": {
                     "exec": [
-                      ""
+                      "pm.test(\"Coletando id da resposta\", () => {\r",
+                      "    const json = pm.response.json();\r",
+                      "    pm.expect(json.id).to.be.a(\"number\");\r",
+                      "    pm.environment.set(\"pet_id\", json.id);\r",
+                      "});\r",
+                      "\r",
+                      "propriedades = [\"id\",\"status\"]\r",
+                      "\r",
+                      "pm.test(\"Verificando se o Body resposta (json) esta ok\", function(){\r",
+                      "    pm.response.to.be.json;\r",
+                      "    const responseData = pm.response.json();\r",
+                      "    const chavesRecebidas = Object.keys(responseData);\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});\r",
+                      "\r",
+                      "const jsonData = pm.response.json();\r",
+                      "const statusPermitidos = [\"available\", \"pending\", \"sold\"];\r",
+                      "pm.test(\"Validar se o status é 'available', 'pending' ou 'sold'\", function () {\r",
+                      "    pm.expect(statusPermitidos).to.include(jsonData.status);\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -34,8 +54,14 @@
                     "exec": [
                       "propriedades = [\"id\", \"name\", \"status\", \"photoUrls\", \"category\", \"tags\"]\r",
                       "\r",
-                      "eval(pm.environment.get(\"Request_Json\"));\r",
-                      "\r",
+                      "pm.test(\"Verificando se o Body (json) esta ok\", function(){\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"raw\");\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    const requestData = JSON.parse(pm.request.body.raw);\r",
+                      "    const chavesRecebidas = Object.keys(requestData);\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "})\r",
                       "\r",
                       "\r",
                       ""
@@ -54,7 +80,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"id\": 58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito2\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"oioioi\"\r\n}",
+                  "raw": "{\r\n  \"id\": 58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito2\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"sold\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -82,8 +108,13 @@
                     "exec": [
                       "propriedades = [\"id\", \"name\", \"status\", \"photoUrls\", \"category\", \"tags\"]\r",
                       "\r",
-                      "eval(pm.environment.get(\"Resposta_Json\"));\r",
-                      ""
+                      "pm.test(\"Verificando se o Body resposta (json) esta ok\", function(){\r",
+                      "    pm.response.to.be.json;\r",
+                      "    const responseData = pm.response.json();\r",
+                      "    const chavesRecebidas = Object.keys(responseData);\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -94,8 +125,11 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "eval(pm.environment.get(\"Final_Numerico\"))\r",
-                      ""
+                      "\r",
+                      "pm.test(\"Verificando se a URL termina em um ID numérico do pedido\", function(){\r",
+                      "const urlString = pm.request.url.toString();\r",
+                      "pm.expect(urlString.endsWith(\"{{pet_id}}\")).to.be.ok;\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -119,13 +153,85 @@
                   }
                 },
                 "url": {
-                  "raw": "{{Url_Base}}/pet/58902744",
+                  "raw": "{{Url_Base}}/pet/{{pet_id}}",
                   "host": [
                     "{{Url_Base}}"
                   ],
                   "path": [
                     "pet",
-                    "58902744"
+                    "{{pet_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Mandar_Foto_Pet",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "\r",
+                      "\r",
+                      "\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL contém um ID numérico e uploadImage\", function () {\r",
+                      "    const urlString = pm.request.url.toString();\r",
+                      "    pm.expect(urlString).to.include(\"{{pet_id}}/uploadImage\");\r",
+                      "});\r",
+                      "\r",
+                      "propriedades = [\"file\"]\r",
+                      "\r",
+                      "pm.test(\"Verificando se o Body (FormData) esta ok\", function () {\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"formdata\");\r",
+                      "    const camposRecebidos = pm.request.body.formdata.map(item => item.key);\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    pm.expect(camposRecebidos).to.include.members(propriedadesEsperadas);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "601bd7ee-0423-43be-bc4d-9e35af8ac66c"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/pet/{{pet_id}}/uploadImage",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet",
+                    "{{pet_id}}",
+                    "uploadImage"
                   ]
                 }
               },
@@ -138,10 +244,16 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "propriedades = [\"id\", \"name\", \"status\", \"photoUrls\", \"category\", \"tags\"]\r",
+                      "const propriedadesEsperadas = [];\r",
                       "\r",
-                      "eval(pm.environment.get(\"Request_Json\"));\r",
-                      ""
+                      "pm.test(\"Verificando se o Body (json) esta ok\", function(){\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"raw\");\r",
+                      "    const rawBody = pm.variables.replaceIn(pm.request.body.raw);\r",
+                      "    const requestData = JSON.parse(rawBody);\r",
+                      "    const chavesRecebidas = Object.keys(requestData);\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -154,7 +266,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"id\": 58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito3\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+                  "raw": "{\r\n  \"id\": 58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito67\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"oioioi\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -180,11 +292,15 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "eval(pm.environment.get(\"Final_Numerico\"))\r",
+                      "pm.test(\"Verificando se a URL termina em um ID numérico do pet\", function(){\r",
+                      "const urlString = pm.request.url.toString();\r",
+                      "pm.expect(urlString.endsWith(\"{{pet_id}}\")).to.be.ok;\r",
+                      "});\r",
                       "\r",
-                      "propriedades = [\"name\", \"status\"]\r",
-                      "\r",
-                      "eval(pm.environment.get(\"Request_urlencoded\"))"
+                      "pm.test(\"Verificando se o Body (urlencoded) está ok\", function() {\r",
+                      "            pm.expect(pm.request.body).to.exist;\r",
+                      "            pm.expect(pm.request.body.mode).to.eql(\"urlencoded\");\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -197,95 +313,16 @@
                 "header": [],
                 "body": {
                   "mode": "urlencoded",
-                  "urlencoded": [
-                    {
-                      "key": "status",
-                      "value": "sold",
-                      "type": "text",
-                      "uuid": "9017ae14-a4d5-4b32-8465-e402d85c0f83"
-                    },
-                    {
-                      "key": "name",
-                      "value": "biscoito2",
-                      "type": "text",
-                      "uuid": "bd674497-2abb-4bc9-b3df-600a7a56322e"
-                    }
-                  ]
+                  "urlencoded": []
                 },
                 "url": {
-                  "raw": "{{Url_Base}}/pet/58902744",
+                  "raw": "{{Url_Base}}/pet/{{pet_id}}",
                   "host": [
                     "{{Url_Base}}"
                   ],
                   "path": [
                     "pet",
-                    "58902744"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Mandar_Foto_Pet",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "exec": [
-                      "pm.test(\"Verificando se a URL contém um ID numérico e terminar com upload\", function(){\r",
-                      "  const urlString = pm.request.url.toString();\r",
-                      "  const hasNumericId = urlString.match(/\\/\\d+\\/uploadImage$/);\r",
-                      "  pm.expect(hasNumericId).to.be.ok;\r",
-                      "}); \r",
-                      "\r",
-                      "propriedades = [\"file\"]\r",
-                      "eval(pm.environment.get(\"Request_FormData\"));\r",
-                      "\r",
-                      "\r",
-                      ""
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "exec": [
-                      "propriedades = [\"file\"]\r",
-                      "\r",
-                      "eval(pm.environment.get(\"Request_FormData\"))"
-                    ],
-                    "type": "text/javascript",
-                    "packages": {},
-                    "requests": {}
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "file",
-                      "type": "file",
-                      "uuid": "bb6e85aa-f6ea-4162-b2f6-720baf87ddd9",
-                      "src": "Teste_API/grayeye.png"
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "{{Url_Base}}/pet/58902744/uploadImage",
-                  "host": [
-                    "{{Url_Base}}"
-                  ],
-                  "path": [
-                    "pet",
-                    "58902744",
-                    "uploadImage"
+                    "{{pet_id}}"
                   ]
                 }
               },
@@ -298,7 +335,10 @@
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "eval(pm.environment.get(\"Resposta_Array\"));"
+                      "pm.test(\"A resposta é um array \", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    pm.expect(jsonData).to.be.an(\"array\");\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -351,8 +391,10 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "eval(pm.environment.get(\"Final_Numerico\"));\r",
-                      ""
+                      "pm.test(\"Verificando se a URL termina em um ID numérico do pet\", function(){\r",
+                      "const urlString = pm.request.url.toString();\r",
+                      "pm.expect(urlString.endsWith(\"{{pet_id}}\")).to.be.ok;\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -375,13 +417,13 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{Url_Base}}/pet/58902744",
+                  "raw": "{{Url_Base}}/pet/{{pet_id}}",
                   "host": [
                     "{{Url_Base}}"
                   ],
                   "path": [
                     "pet",
-                    "58902744"
+                    "{{pet_id}}"
                   ]
                 }
               },
@@ -439,7 +481,31 @@
                       "    \"userStatus\"\r",
                       "];\r",
                       "\r",
-                      "eval(pm.environment.get(\"Request_Json\"));\r",
+                      "pm.test(\"Verificando se o Body (json) esta ok\", function(){\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"raw\");\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    const requestData = JSON.parse(pm.request.body.raw);\r",
+                      "    const chavesRecebidas = Object.keys(requestData);\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "})\r",
+                      "\r",
+                      "pm.test(\"Coletando nome da requisição\", () => {\r",
+                      "    const requestData = JSON.parse(pm.request.body.raw);\r",
+                      "    pm.expect(requestData.username).to.be.a(\"string\");\r",
+                      "    pm.environment.set(\"user_nome\", requestData.username);\r",
+                      "    console.log(\"Nome coletado da Request:\", requestData.username);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
                       ""
                     ],
                     "type": "text/javascript",
@@ -489,7 +555,14 @@
                       "        \"email\", \"password\", \"phone\", \"userStatus\"\r",
                       "];\r",
                       "\r",
-                      "eval(pm.environment.get(\"Request_Json_Array\"));"
+                      "pm.test(\"Validar se  o body existe e os usuários na lista da requisição estão corretos\", function () {\r",
+                      "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+                      "    const listaUsuarios = Array.isArray(requestBody) ? requestBody : [requestBody];\r",
+                      "    listaUsuarios.forEach((user, index) => {\r",
+                      "        pm.expect(user, `Erro no usuário de índice ${index}`).to.have.all.keys(camposObrigatorios);\r",
+                      "    });\r",
+                      "});\r",
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -550,7 +623,13 @@
                       "        \"email\", \"password\", \"phone\", \"userStatus\"\r",
                       "];\r",
                       "\r",
-                      "eval(pm.environment.get(\"Request_Json_Array\"));"
+                      "pm.test(\"Validar se  o body existe e os usuários na lista da requisição estão corretos\", function () {\r",
+                      "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+                      "    const listaUsuarios = Array.isArray(requestBody) ? requestBody : [requestBody];\r",
+                      "    listaUsuarios.forEach((user, index) => {\r",
+                      "        pm.expect(user, `Erro no usuário de índice ${index}`).to.have.all.keys(camposObrigatorios);\r",
+                      "    });\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -601,7 +680,13 @@
                       "    \"userStatus\"\r",
                       "];\r",
                       "\r",
-                      "eval(pm.environment.get(\"Resposta_Json\"));"
+                      "pm.test(\"Verificando se o Body resposta (json) esta ok\", function(){\r",
+                      "    pm.response.to.be.json;\r",
+                      "    const responseData = pm.response.json();\r",
+                      "    const chavesRecebidas = Object.keys(responseData);\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -612,7 +697,10 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "eval(pm.environment.get(\"Final_String\"));"
+                      "pm.test(\"Verificando se a URL termina em um nome de usuario\", function(){\r",
+                      "const urlString = pm.request.url.toString();\r",
+                      "pm.expect(urlString.endsWith(\"{{user_nome}}\")).to.be.ok;\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -624,13 +712,13 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{Url_Base}}/user/tipatpio",
+                  "raw": "{{Url_Base}}/user/{{user_nome}}",
                   "host": [
                     "{{Url_Base}}"
                   ],
                   "path": [
                     "user",
-                    "tipatpio"
+                    "{{user_nome}}"
                   ]
                 }
               },
@@ -643,9 +731,12 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "eval(pm.environment.get(\"Final_String\"));\r",
+                      "pm.test(\"Verificando se a URL termina em um nome de usuario\", function(){\r",
+                      "const urlString = pm.request.url.toString();\r",
+                      "pm.expect(urlString.endsWith(\"{{user_nome}}\")).to.be.ok;\r",
+                      "});\r",
                       "\r",
-                      "const propriedades = [\r",
+                      "const propriedadesEsperadas = [\r",
                       "    \"id\",\r",
                       "    \"username\",\r",
                       "    \"firstName\",\r",
@@ -656,9 +747,14 @@
                       "    \"userStatus\"\r",
                       "];\r",
                       "\r",
-                      "eval(pm.environment.get(\"Request_Json\"));\r",
-                      "\r",
-                      ""
+                      "pm.test(\"Verificando se o Body (json) esta ok\", function(){\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"raw\");\r",
+                      "    const rawBody = pm.variables.replaceIn(pm.request.body.raw);\r",
+                      "    const requestData = JSON.parse(rawBody);\r",
+                      "    const chavesRecebidas = Object.keys(requestData);\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -671,7 +767,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"id\": 58902749,\r\n  \"username\": \"tipatpio\",\r\n  \"firstName\": \"ygor\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+                  "raw": "{\r\n  \"id\": 58902749,\r\n  \"username\": \"tipatpio\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -679,13 +775,13 @@
                   }
                 },
                 "url": {
-                  "raw": "{{Url_Base}}/user/tipatpio",
+                  "raw": "{{Url_Base}}/user/{{user_nome}}",
                   "host": [
                     "{{Url_Base}}"
                   ],
                   "path": [
                     "user",
-                    "tipatpio"
+                    "{{user_nome}}"
                   ]
                 }
               },
@@ -705,7 +801,32 @@
                       "\r",
                       "propriedades = [\"username\",\"password\"]\r",
                       "\r",
-                      "eval(pm.environment.get(\"Request_FormData\"))"
+                      "pm.test(\"Verificando se o Body (FormData) esta ok\", function(){\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"formdata\");\r",
+                      "    const camposRecebidos = pm.request.body.formdata.map(item => item.key);\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    pm.expect(camposRecebidos).to.include.members(propriedadesEsperadas);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "propriedades = [\"message\"]\r",
+                      "\r",
+                      "pm.test(\"Verificando se o Body resposta retorna message\", function(){\r",
+                      "    pm.response.to.be.json;\r",
+                      "    const responseData = pm.response.json();\r",
+                      "    const chavesRecebidas = Object.keys(responseData);\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -724,7 +845,7 @@
                   "formdata": [
                     {
                       "key": "username",
-                      "value": "tipatpio",
+                      "value": "{{user_nome}}",
                       "type": "text",
                       "uuid": "5e3a968e-f5bd-45b2-ac65-182975866b20"
                     },
@@ -801,7 +922,10 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "eval(pm.environment.get(\"Final_String\"));"
+                      "pm.test(\"Verificando se a URL termina em um nome de usuario\", function(){\r",
+                      "const urlString = pm.request.url.toString();\r",
+                      "pm.expect(urlString.endsWith(\"{{user_nome}}\")).to.be.ok;\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -813,13 +937,13 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{Url_Base}}/user/tipatpio",
+                  "raw": "{{Url_Base}}/user/{{user_nome}}",
                   "host": [
                     "{{Url_Base}}"
                   ],
                   "path": [
                     "user",
-                    "tipatpio"
+                    "{{user_nome}}"
                   ]
                 }
               },
@@ -866,7 +990,13 @@
                     "exec": [
                       "propriedades = []\r",
                       "\r",
-                      "eval(pm.environment.get(\"Resposta_Json\"));"
+                      "pm.test(\"Verificando se o Body resposta (json) esta ok\", function(){\r",
+                      "    pm.response.to.be.json;\r",
+                      "    const responseData = pm.response.json();\r",
+                      "    const chavesRecebidas = Object.keys(responseData);\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -911,10 +1041,11 @@
                   "listen": "test",
                   "script": {
                     "exec": [
-                      "pm.test(\"Verificando se a URL esta correta\", function(){\r",
-                      "  const urlString = pm.request.url.toString();\r",
-                      "  pm.expect(urlString.endsWith(\"/order\")).to.be.true;\r",
-                      "}); \r",
+                      "pm.test(\"Coletando id da resposta\", () => {\r",
+                      "    const json = pm.response.json();\r",
+                      "    pm.expect(json.id).to.be.a(\"number\");\r",
+                      "    pm.environment.set(\"pedido_id\", json.id);\r",
+                      "});\r",
                       "\r",
                       "\r",
                       ""
@@ -933,7 +1064,7 @@
                       "  pm.expect(urlString.endsWith(\"/order\")).to.be.true;\r",
                       "}); \r",
                       "\r",
-                      "const propriedades = [\r",
+                      "const propriedadesEsperadas = [\r",
                       "    \"id\", \r",
                       "    \"petId\", \r",
                       "    \"quantity\", \r",
@@ -942,7 +1073,16 @@
                       "    \"complete\"\r",
                       "];\r",
                       "\r",
-                      "eval(pm.environment.get(\"Request_Json\"));"
+                      "pm.test(\"Verificando se o Body (json) esta ok\", function(){\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"raw\");\r",
+                      "    const rawBody = pm.variables.replaceIn(pm.request.body.raw);\r",
+                      "    const requestData = JSON.parse(rawBody);\r",
+                      "    const chavesRecebidas = Object.keys(requestData);\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});\r",
+                      "\r",
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -955,7 +1095,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"id\": 4924248,\r\n  \"petId\": 58902744,\r\n  \"quantity\": 1,\r\n  \"shipDate\": \"2026-05-02T01:33:23.141Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
+                  "raw": "{\r\n  \"id\": 4924248,\r\n  \"petId\": {{pet_id}},\r\n  \"quantity\": 1,\r\n  \"shipDate\": \"2026-05-02T01:33:23.141Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -987,7 +1127,10 @@
                       "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
                       "});\r",
                       "\r",
-                      "eval(pm.environment.get(\"Final_Numerico\"))"
+                      "pm.test(\"Verificando se a URL termina em um ID numérico do pedido\", function(){\r",
+                      "const urlString = pm.request.url.toString();\r",
+                      "pm.expect(urlString.endsWith(\"{{pedido_id}}\")).to.be.ok;\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -999,14 +1142,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{Url_Base}}/store/order/4924248",
+                  "raw": "{{Url_Base}}/store/order/{{pedido_id}}",
                   "host": [
                     "{{Url_Base}}"
                   ],
                   "path": [
                     "store",
                     "order",
-                    "4924248"
+                    "{{pedido_id}}"
                   ]
                 }
               },
@@ -1024,7 +1167,10 @@
                       "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
                       "});\r",
                       "\r",
-                      "eval(pm.environment.get(\"Final_Numerico\"))"
+                      "pm.test(\"Verificando se a URL termina em um ID numérico do pedido\", function(){\r",
+                      "const urlString = pm.request.url.toString();\r",
+                      "pm.expect(urlString.endsWith(\"{{pedido_id}}\")).to.be.ok;\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -1036,14 +1182,14 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{Url_Base}}/store/order/4924248",
+                  "raw": "{{Url_Base}}/store/order/{{pedido_id}}",
                   "host": [
                     "{{Url_Base}}"
                   ],
                   "path": [
                     "store",
                     "order",
-                    "4924248"
+                    "{{pedido_id}}"
                   ]
                 }
               },
@@ -1097,18 +1243,6 @@
               "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
               "})\r",
               "\r",
-              "pm.test(\"Verificando se as funçoes existem e estão configuradas\", function(){\r",
-              "    pm.expect(pm.environment.get(\"Final_Numerico\")).to.not.be.undefined;\r",
-              "    pm.expect(pm.environment.get(\"Request_Json\")).to.not.be.undefined;\r",
-              "    pm.expect(pm.environment.get(\"Resposta_Json\")).to.not.be.undefined;\r",
-              "    pm.expect(pm.environment.get(\"Request_FormData\")).to.not.be.undefined;\r",
-              "    pm.expect(pm.environment.get(\"Request_urlencoded\")).to.not.be.undefined;\r",
-              "    pm.expect(pm.environment.get(\"Resposta_Array\")).to.not.be.undefined;\r",
-              "    pm.expect(pm.environment.get(\"Request_Json_Array\")).to.not.be.undefined;\r",
-              "    pm.expect(pm.environment.get(\"Final_String\")).to.not.be.undefined;\r",
-              "});\r",
-              "\r",
-              "\r",
               ""
             ]
           }
@@ -1131,6 +1265,35 @@
           }
         }
       ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {
+          "@ylapiy-6193098/petshoppackage": {
+            "id": "019df909-ca3a-70da-b5e8-9f3c9d1c5d5b"
+          }
+        },
+        "requests": {},
+        "exec": [
+          "const petshoppackage = pm.require('@ylapiy-6193098/petshoppackage');"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "\r",
+          ""
+        ]
+      }
     }
   ]
 }

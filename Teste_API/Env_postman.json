@@ -9,56 +9,26 @@
 			"enabled": true
 		},
 		{
-			"key": "Final_Numerico",
-			"value": "pm.test(\"Verificando se a URL termina em um ID numérico\", function(){\n  const urlString = pm.request.url.toString();\n  const hasNumericId = urlString.match(/\\/\\d+$/);\n  pm.expect(urlString.endsWith(hasNumericId)).to.be.ok;\n}); ",
+			"key": "pet_id",
+			"value": 58902744,
 			"type": "default",
 			"enabled": true
 		},
 		{
-			"key": "Request_Json",
-			"value": "pm.test(\"Verificando se o Body (json) esta ok\", function(){\n    pm.expect(pm.request.body).to.exist;\n    pm.expect(pm.request.body.mode).to.eql(\"raw\");\n    const propriedadesEsperadas = propriedades;\n    const requestData = JSON.parse(pm.request.body.raw);\n    const chavesRecebidas = Object.keys(requestData);\n    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\n})",
+			"key": "user_nome",
+			"value": "tipatpio",
 			"type": "default",
 			"enabled": true
 		},
 		{
-			"key": "Resposta_Json",
-			"value": "pm.test(\"Verificando se o Body resposta (json) esta ok\", function(){\n    pm.response.to.be.json;\n    const responseData = pm.response.json();\n    const chavesRecebidas = Object.keys(responseData);\n    const propriedadesEsperadas = propriedades;\n    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\n});",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "Request_FormData",
-			"value": "pm.test(\"Verificando se o Body (FormData) esta ok\", function(){\n    pm.expect(pm.request.body).to.exist;\n    pm.expect(pm.request.body.mode).to.eql(\"formdata\");\n    const camposRecebidos = pm.request.body.formdata.map(item => item.key);\n    const propriedadesEsperadas = propriedades;\n    pm.expect(camposRecebidos).to.include.members(propriedadesEsperadas);\n})",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "Request_urlencoded",
-			"value": "pm.test(\"Verificando se o Body (urlencoded) esta ok\", function(){\n    pm.expect(pm.request.body).to.exist;\n    pm.expect(pm.request.body.mode).to.eql(\"urlencoded\");\n    const camposRecebidos = pm.request.body.urlencoded.map(item => item.key);\n    const propriedadesEsperadas = propriedades;\n    pm.expect(camposRecebidos).to.include.members(propriedadesEsperadas);\n    const body = pm.request.body.urlencoded;\n    const camposParaValidar = [\"name\", \"status\"];\n    camposParaValidar.forEach(campo => {\n        const item = body.find(element => element.key === campo);\n        pm.expect(item, `O campo '${campo}' não foi encontrado no body`).to.not.be.undefined;\n        const valor = item.value ? item.value.trim() : \"\";\n        pm.expect(valor, `O campo '${campo}' está vazio`).to.not.be.empty;\n    });\n});",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "Resposta_Array",
-			"value": "pm.test(\"A resposta é um array de pedidos\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an(\"array\");\n});",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "Request_Json_Array",
-			"value": "pm.test(\"Validar se  o body existe e os usuários na lista da requisição estão corretos\", function () {\n    const requestBody = JSON.parse(pm.request.body.raw);\n    const listaUsuarios = Array.isArray(requestBody) ? requestBody : [requestBody];\n    listaUsuarios.forEach((user, index) => {\n        pm.expect(user, `Erro no usuário de índice ${index}`).to.have.all.keys(camposObrigatorios);\n    });\n});",
-			"type": "default",
-			"enabled": true
-		},
-		{
-			"key": "Final_String",
-			"value": "\npm.test(\"Validar se existe um recurso após a última barra\", function () {\n    const urlCompleta = pm.request.url.toString();\n    const match = urlCompleta.match(/\\/([^\\/]+)$/);\n    pm.expect(match, \"A URL termina em '/' ou não tem nada depois dela\").to.not.be.null;\n    if (match) {\n        console.log(\"Texto encontrado no final:\", match[1]);\n    }\n});",
+			"key": "pedido_id",
+			"value": 4924248,
 			"type": "default",
 			"enabled": true
 		}
 	],
 	"color": null,
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2026-05-02T10:50:19.919Z",
-	"_postman_exported_using": "Postman/12.8.5-260501-0232"
+	"_postman_exported_at": "2026-05-05T18:26:25.829Z",
+	"_postman_exported_using": "Postman/12.8.4"
 }
