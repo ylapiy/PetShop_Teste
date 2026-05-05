@@ -1,0 +1,25 @@
+name: Testes Automatizados das APIS do Pet Shop
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  run-api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixando os arquivos do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalando o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalando o Newman (Executor do Postman)
+        run: npm install -g newman
+
+      - name: Rodando os Testes da Petstore
+        run: newman run Teste_API/Teste_API_PetStore.json -e Teste_API/Env_postman.json --reporters cli

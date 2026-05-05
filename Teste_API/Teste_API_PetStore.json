@@ -1,0 +1,1136 @@
+{
+  "info": {
+    "_postman_id": "93185c93-6d57-4e88-9d30-18cea26d69b3",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54448864",
+    "_collection_link": "https://go.postman.co/collection/54448864-93185c93-6d57-4e88-9d30-18cea26d69b3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Teste_Pet_shop",
+      "item": [
+        {
+          "name": "Pets",
+          "item": [
+            {
+              "name": "Adicionar_Pet",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "propriedades = [\"id\", \"name\", \"status\", \"photoUrls\", \"category\", \"tags\"]\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_Json\"));\r",
+                      "\r",
+                      "\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {}
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito2\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"oioioi\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/pet",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Pegar_Pet",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "propriedades = [\"id\", \"name\", \"status\", \"photoUrls\", \"category\", \"tags\"]\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Resposta_Json\"));\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "eval(pm.environment.get(\"Final_Numerico\"))\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/pet/58902744",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet",
+                    "58902744"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update_Pet_Json",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "propriedades = [\"id\", \"name\", \"status\", \"photoUrls\", \"category\", \"tags\"]\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_Json\"));\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito3\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/pet",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update_Pet_Unlen",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "eval(pm.environment.get(\"Final_Numerico\"))\r",
+                      "\r",
+                      "propriedades = [\"name\", \"status\"]\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_urlencoded\"))"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "status",
+                      "value": "sold",
+                      "type": "text",
+                      "uuid": "9017ae14-a4d5-4b32-8465-e402d85c0f83"
+                    },
+                    {
+                      "key": "name",
+                      "value": "biscoito2",
+                      "type": "text",
+                      "uuid": "bd674497-2abb-4bc9-b3df-600a7a56322e"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/pet/58902744",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet",
+                    "58902744"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Mandar_Foto_Pet",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL contém um ID numérico e terminar com upload\", function(){\r",
+                      "  const urlString = pm.request.url.toString();\r",
+                      "  const hasNumericId = urlString.match(/\\/\\d+\\/uploadImage$/);\r",
+                      "  pm.expect(hasNumericId).to.be.ok;\r",
+                      "}); \r",
+                      "\r",
+                      "propriedades = [\"file\"]\r",
+                      "eval(pm.environment.get(\"Request_FormData\"));\r",
+                      "\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "propriedades = [\"file\"]\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_FormData\"))"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "bb6e85aa-f6ea-4162-b2f6-720baf87ddd9",
+                      "src": "Teste_API/grayeye.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/pet/58902744/uploadImage",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet",
+                    "58902744",
+                    "uploadImage"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Procurar_por_Status_Pet",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "eval(pm.environment.get(\"Resposta_Array\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Requisição enviada com o status correto\", function () {\r",
+                      "    const statusParam = pm.request.url.query.get(\"status\");\r",
+                      "    const valoresPermitidos = [\"available\", \"pending\", \"sold\"];\r",
+                      "    pm.expect(statusParam).to.exist;\r",
+                      "    pm.expect(valoresPermitidos).to.include(statusParam);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{Url_Base}}/pet/findByStatus?status=sold",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet",
+                    "findByStatus"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "sold"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deletar_Pet",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "eval(pm.environment.get(\"Final_Numerico\"));\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{Url_Base}}/pet/58902744",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet",
+                    "58902744"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "pm.test(\"Verificando se a URL esta configurada corretamente (pet)\", function () {\r",
+                  "    const Url = '/pet'\r",
+                  "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "Adicionar_User",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const propriedades = [\r",
+                      "    \"id\",\r",
+                      "    \"username\",\r",
+                      "    \"firstName\",\r",
+                      "    \"lastName\",\r",
+                      "    \"email\",\r",
+                      "    \"password\",\r",
+                      "    \"phone\",\r",
+                      "    \"userStatus\"\r",
+                      "];\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_Json\"));\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 58902749,\r\n  \"username\": \"tipatpio\",\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/user",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "user"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Adicionar_Users_Array",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta configurada corretamente\", function () {\r",
+                      "    const Url = '/createWithArray'\r",
+                      "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                      "});\r",
+                      "\r",
+                      "const camposObrigatorios = [\r",
+                      "        \"id\", \"username\", \"firstName\", \"lastName\", \r",
+                      "        \"email\", \"password\", \"phone\", \"userStatus\"\r",
+                      "];\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_Json_Array\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\r\n    {\r\n        \"id\": 102,\r\n        \"username\": \"jose_silva\",\r\n        \"firstName\": \"Jose\",\r\n        \"lastName\": \"Silva\",\r\n        \"email\": \"jose.silva@email.com\",\r\n        \"password\": \"senhaSegura123\",\r\n        \"phone\": \"11988887777\",\r\n        \"userStatus\": 1\r\n    },\r\n    {\r\n        \"id\": 102,\r\n        \"username\": \"maria_oliveira\",\r\n        \"firstName\": \"Maria\",\r\n        \"lastName\": \"Oliveira\",\r\n        \"email\": \"maria.oli@email.com\",\r\n        \"password\": \"adminMaria!\",\r\n        \"phone\": \"11977776666\",\r\n        \"userStatus\": 1\r\n    },\r\n    {\r\n        \"id\": 103,\r\n        \"username\": \"carlos_tech\",\r\n        \"firstName\": \"Carlos\",\r\n        \"lastName\": \"Souza\",\r\n        \"email\": \"carlos.tech@email.com\",\r\n        \"password\": \"carlos_password\",\r\n        \"phone\": \"11966665555\",\r\n        \"userStatus\": 0\r\n    }\r\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/user/createWithArray",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "user",
+                    "createWithArray"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Adicionar_Users_List",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta configurada corretamente\", function () {\r",
+                      "    const Url = '/createWithList'\r",
+                      "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                      "});\r",
+                      "\r",
+                      "const camposObrigatorios = [\r",
+                      "        \"id\", \"username\", \"firstName\", \"lastName\", \r",
+                      "        \"email\", \"password\", \"phone\", \"userStatus\"\r",
+                      "];\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_Json_Array\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\r\n  {\r\n    \"id\": 101,\r\n    \"username\": \"jose_silva\",\r\n    \"firstName\": \"Jose\",\r\n    \"lastName\": \"Silva\",\r\n    \"email\": \"jose.silva@email.com\",\r\n    \"password\": \"senhaSegura123\",\r\n    \"phone\": \"11988887777\",\r\n    \"userStatus\": 1\r\n  },\r\n  {\r\n    \"id\": 102,\r\n    \"username\": \"maria_oliveira\",\r\n    \"firstName\": \"Maria\",\r\n    \"lastName\": \"Oliveira\",\r\n    \"email\": \"maria.oli@email.com\",\r\n    \"password\": \"adminMaria!\",\r\n    \"phone\": \"11977776666\",\r\n    \"userStatus\": 1\r\n  },\r\n  {\r\n    \"id\": 103,\r\n    \"username\": \"carlos_tech\",\r\n    \"firstName\": \"Carlos\",\r\n    \"lastName\": \"Souza\",\r\n    \"email\": \"carlos.tech@email.com\",\r\n    \"password\": \"carlos_password\",\r\n    \"phone\": \"11966665555\",\r\n    \"userStatus\": 0\r\n  }\r\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/user/createWithList",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "user",
+                    "createWithList"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Procurar_Usuario",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const propriedades = [\r",
+                      "    \"id\",\r",
+                      "    \"username\",\r",
+                      "    \"firstName\",\r",
+                      "    \"lastName\",\r",
+                      "    \"email\",\r",
+                      "    \"password\",\r",
+                      "    \"phone\",\r",
+                      "    \"userStatus\"\r",
+                      "];\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Resposta_Json\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "eval(pm.environment.get(\"Final_String\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{Url_Base}}/user/tipatpio",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "user",
+                    "tipatpio"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Modificar_Usuario",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "eval(pm.environment.get(\"Final_String\"));\r",
+                      "\r",
+                      "const propriedades = [\r",
+                      "    \"id\",\r",
+                      "    \"username\",\r",
+                      "    \"firstName\",\r",
+                      "    \"lastName\",\r",
+                      "    \"email\",\r",
+                      "    \"password\",\r",
+                      "    \"phone\",\r",
+                      "    \"userStatus\"\r",
+                      "];\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_Json\"));\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 58902749,\r\n  \"username\": \"tipatpio\",\r\n  \"firstName\": \"ygor\",\r\n  \"lastName\": \"string\",\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"phone\": \"string\",\r\n  \"userStatus\": 0\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/user/tipatpio",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "user",
+                    "tipatpio"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Login",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta configurada corretamente\", function () {\r",
+                      "    const Url = '/login'\r",
+                      "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                      "});\r",
+                      "\r",
+                      "propriedades = [\"username\",\"password\"]\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_FormData\"))"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "username",
+                      "value": "tipatpio",
+                      "type": "text",
+                      "uuid": "5e3a968e-f5bd-45b2-ac65-182975866b20"
+                    },
+                    {
+                      "key": "password",
+                      "value": "string",
+                      "type": "text",
+                      "uuid": "549e8b17-6af1-4e28-8b91-c3f550605586"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/user/login",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "user",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Logout",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta configurada corretamente\", function () {\r",
+                      "    const Url = '/logout'\r",
+                      "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{Url_Base}}/user/logout",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "user",
+                    "logout"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Apagar_User",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "eval(pm.environment.get(\"Final_String\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{Url_Base}}/user/tipatpio",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "user",
+                    "tipatpio"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "pm.test(\"Verificando se a URL esta configurada corretamente (user)\", function () {\r",
+                  "    const Url = '/user'\r",
+                  "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Store",
+          "item": [
+            {
+              "name": "Pegar_Iventario_loja",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "propriedades = []\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Resposta_Json\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta correta\", function(){\r",
+                      "  const urlString = pm.request.url.toString();\r",
+                      "  pm.expect(urlString.endsWith(\"/inventory\")).to.be.true;\r",
+                      "}); "
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{Url_Base}}/store/inventory",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "store",
+                    "inventory"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Place_Order",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta correta\", function(){\r",
+                      "  const urlString = pm.request.url.toString();\r",
+                      "  pm.expect(urlString.endsWith(\"/order\")).to.be.true;\r",
+                      "}); \r",
+                      "\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta correta\", function(){\r",
+                      "  const urlString = pm.request.url.toString();\r",
+                      "  pm.expect(urlString.endsWith(\"/order\")).to.be.true;\r",
+                      "}); \r",
+                      "\r",
+                      "const propriedades = [\r",
+                      "    \"id\", \r",
+                      "    \"petId\", \r",
+                      "    \"quantity\", \r",
+                      "    \"shipDate\", \r",
+                      "    \"status\", \r",
+                      "    \"complete\"\r",
+                      "];\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Request_Json\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 4924248,\r\n  \"petId\": 58902744,\r\n  \"quantity\": 1,\r\n  \"shipDate\": \"2026-05-02T01:33:23.141Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/store/order",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "store",
+                    "order"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Find_Purchase",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta configurada corretamente (store)\", function () {\r",
+                      "    const Url = '/order/'\r",
+                      "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                      "});\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Final_Numerico\"))"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{Url_Base}}/store/order/4924248",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "store",
+                    "order",
+                    "4924248"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete_Purchase",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Verificando se a URL esta configurada corretamente (store)\", function () {\r",
+                      "    const Url = '/order/'\r",
+                      "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                      "});\r",
+                      "\r",
+                      "eval(pm.environment.get(\"Final_Numerico\"))"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{Url_Base}}/store/order/4924248",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "store",
+                    "order",
+                    "4924248"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  "pm.test(\"Verificando se a URL esta configurada corretamente (store)\", function () {\r",
+                  "    const Url = '/store'\r",
+                  "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+                  "});\r",
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "pm.test(\"Verificando se a URL BASE ao menos existe\" , function(){\r",
+              "    pm.expect(pm.environment.get(\"Url_Base\")).to.not.be.undefined;\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Verificando se a URL esta configurada corretamente (Base)\", function(){\r",
+              "    const Url = \"{{Url_Base}}\"    \r",
+              "    pm.expect(pm.request.url.toString()).to.include(Url);\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Verificando se as funçoes existem e estão configuradas\", function(){\r",
+              "    pm.expect(pm.environment.get(\"Final_Numerico\")).to.not.be.undefined;\r",
+              "    pm.expect(pm.environment.get(\"Request_Json\")).to.not.be.undefined;\r",
+              "    pm.expect(pm.environment.get(\"Resposta_Json\")).to.not.be.undefined;\r",
+              "    pm.expect(pm.environment.get(\"Request_FormData\")).to.not.be.undefined;\r",
+              "    pm.expect(pm.environment.get(\"Request_urlencoded\")).to.not.be.undefined;\r",
+              "    pm.expect(pm.environment.get(\"Resposta_Array\")).to.not.be.undefined;\r",
+              "    pm.expect(pm.environment.get(\"Request_Json_Array\")).to.not.be.undefined;\r",
+              "    pm.expect(pm.environment.get(\"Final_String\")).to.not.be.undefined;\r",
+              "});\r",
+              "\r",
+              "\r",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"tempo de resposta é dentro do aceitavel\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+name: Pipeline_Selenium_Swag_Labs
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  executar-testes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixando o Código
+        uses: actions/checkout@v4
+
+      - name: Instalando o Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Instalando Dependências
+        run: |
+          pip install selenium webdriver-manager
+
+      - name: Rezando Forte para funcionar...
+        run: python Teste_E2E/scrap.py
