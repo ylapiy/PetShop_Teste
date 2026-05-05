@@ -1,6 +1,8 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+import dotenv
+
 
 def paginaLogin(wait):
     EntradasLogin = {
@@ -16,7 +18,7 @@ def paginaLogin(wait):
     botao_login.click()
 
 
-def preencherCarinho(driver, wait):
+def paginaPreencherCarinho(driver, wait):
 
     wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "btn_inventory")))
     botoes = driver.find_elements(By.CLASS_NAME, "btn_inventory")
@@ -31,11 +33,14 @@ def preencherCarinho(driver, wait):
         EC.element_to_be_clickable((By.CLASS_NAME, "shopping_cart_link"))
     )
     carrinho.click()
+
+
+def paginaChekout(wait):
     btn_checkout = wait.until(EC.element_to_be_clickable((By.ID, "checkout")))
     btn_checkout.click()
 
 
-def colocarDadosPessoais(wait):
+def paginaColocarDadosPessoais(wait):
     EntradasPesoais = {
         "nomeF": {"by": (By.ID, "first-name"), "valor": "Ygor"},
         "nomeL": {"by": (By.ID, "last-name"), "valor": "Félix"},
@@ -46,9 +51,10 @@ def colocarDadosPessoais(wait):
         elemento.clear()
         elemento.send_keys(dados["valor"])
 
-
-def finalizandoACompra(wait):
     btn_continue = wait.until(EC.element_to_be_clickable((By.ID, "continue")))
     btn_continue.click()
+
+
+def paginaFinalizandoACompra(wait):
     btn_finish = wait.until(EC.element_to_be_clickable((By.ID, "finish")))
     btn_finish.click()

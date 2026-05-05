@@ -5,12 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 import time
 
-from Paginas import (
-    paginaLogin,
-    preencherCarinho,
-    colocarDadosPessoais,
-    finalizandoACompra,
-)
+from Paginas import *
 
 options = Options()
 options.add_argument("--headless")
@@ -24,10 +19,11 @@ try:
     driver.get("https://www.saucedemo.com")
     paginaLogin(wait)
     print("Login realizado.")
-    preencherCarinho(driver, wait)
+    paginaPreencherCarinho(driver, wait)
     print("Itens adicionados e carrinho aberto.")
-    colocarDadosPessoais(wait)
-    finalizandoACompra(wait)
+    paginaChekout(wait)
+    paginaColocarDadosPessoais(wait)
+    paginaFinalizandoACompra(wait)
     print("Compra finalizada com sucesso!")
 
 except Exception as e:
