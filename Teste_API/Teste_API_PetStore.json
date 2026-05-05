@@ -1272,14 +1272,10 @@
       "listen": "prerequest",
       "script": {
         "type": "text/javascript",
-        "packages": {
-          "@ylapiy-6193098/petshoppackage": {
-            "id": "019df909-ca3a-70da-b5e8-9f3c9d1c5d5b"
-          }
-        },
+        "packages": {},
         "requests": {},
         "exec": [
-          "const petshoppackage = pm.require('@ylapiy-6193098/petshoppackage');"
+          ""
         ]
       }
     },
