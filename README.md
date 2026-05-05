@@ -19,8 +19,9 @@ newman run Teste_API/Teste_API_PetStore.json -e Teste_API/Env_postman.json --rep
 É necessario ter **python** instalado
 
 ```bash
-#instalar o selenium
-python -m pip install
+#instalar o selenium e webdriver
+python -m pip install selenium
+python -m pip install webdriver-manager
 
 #rodar o script de teste webz
 python .\Teste_E2E\scrap.py
