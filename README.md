@@ -1,5 +1,10 @@
 # Petshop & Swag Labs Testes Automaticos
 
+# Resumo
+
+Testes de API dos endpoits da aplicação https://petstore.swagger.io e teste E2E do site https://www.saucedemo.com, com
+integração com git hub actions para rodar esses testes a cada commit ou pull do projeto
+
 ## Como Executar Localmente
 
 ### 1. Testes de API
@@ -85,4 +90,3 @@ python .\Teste_E2E\scrap.py
 <img src="prints/print10.png" width="500">
 <img src="prints/print11.png" width="500">
 <img src="prints/print12.png" width="500">
-<img src="prints/print13.png" width="500">
