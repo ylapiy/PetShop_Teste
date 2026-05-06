@@ -1,6 +1,6 @@
 # Petshop & Swag Labs Testes Automaticos
 
-# Resumo
+# Resum
 
 Testes de API que cobrem todos os endpoits da aplicação https://petstore.swagger.io e teste E2E do site https://www.saucedemo.com que realizam o fluxo de realização de login, adição de produtos ao carinho e finalização da compra, todo os 2 testes estão integrados em pipelines CI do git hub actions para rodar esses testes a cada commit ou pull do projeto
 
