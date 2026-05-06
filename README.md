@@ -28,7 +28,7 @@ newman run Teste_API/Teste_API_PetStore.json -e Teste_API/Env_postman.json --rep
 
 ### 3. Testes de Automação web (Python/Selenium)
 
-É necessario ter **python** instalado
+É necessario ter **python** e **chrome** instalado
 
 ```bash
 
