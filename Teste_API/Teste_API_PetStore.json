@@ -260,6 +260,7 @@
                       "    const chavesRecebidas = Object.keys(requestData);\r",
                       "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
                       "});\r",
+                      "\r",
                       ""
                     ],
                     "type": "text/javascript",
@@ -348,7 +349,8 @@
                       "    const campoStatus = body.find(item => item.key === 'status');\r",
                       "    pm.expect(campoStatus, \"Campo 'status' não encontrado no body\").to.exist;\r",
                       "    pm.expect(statusPermitidos).to.include(campoStatus.value);\r",
-                      "});"
+                      "});\r",
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -427,7 +429,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{Url_Base}}/pet/findByStatus?status=sold",
+                  "raw": "{{Url_Base}}/pet/findByStatus?status=pending",
                   "host": [
                     "{{Url_Base}}"
                   ],
@@ -438,7 +440,7 @@
                   "query": [
                     {
                       "key": "status",
-                      "value": "sold"
+                      "value": "pending"
                     }
                   ]
                 }
@@ -456,27 +458,7 @@
                       "const urlString = pm.request.url.toString();\r",
                       "pm.expect(urlString.endsWith(\"{{pet_id}}\")).to.be.ok;\r",
                       "});\r",
-                      "\r",
-                      "const urlDeVerificacao = \"https://petstore.swagger.io/v2/pet/58902744\";\r",
-                      "\r",
-                      "pm.test(\"Pré-condição: O cachorro deve pelo menos existir no sistema\", function (done) {\r",
-                      "    \r",
-                      "    pm.sendRequest(urlDeVerificacao, function (err, response) {\r",
-                      "        if (err) {\r",
-                      "            return done(err);\r",
-                      "        }\r",
-                      "\r",
-                      "        try {\r",
-                      "            pm.expect(response.code).to.eql(200, \r",
-                      "                `O recurso não foi encontrado (Status: ${response.code})`\r",
-                      "            );\r",
-                      "            console.log(\"Recurso confirmado no banco. Prosseguindo...\");\r",
-                      "            done();\r",
-                      "        } catch (e) {\r",
-                      "            done(e);\r",
-                      "        }\r",
-                      "    });\r",
-                      "});"
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -931,7 +913,8 @@
                       "    const requestData = JSON.parse(rawBody);\r",
                       "    const chavesRecebidas = Object.keys(requestData);\r",
                       "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
-                      "});"
+                      "});\r",
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -1139,27 +1122,7 @@
                       "const urlString = pm.request.url.toString();\r",
                       "pm.expect(urlString.endsWith(\"{{user_nome}}\")).to.be.ok;\r",
                       "});\r",
-                      "\r",
-                      "const urlDeVerificacao = \"https://petstore.swagger.io/v2/user/tipatpio\";\r",
-                      "\r",
-                      "pm.test(\"Pré-condição: O usuario deve pelo menos existir no sistema\", function (done) {\r",
-                      "    \r",
-                      "    pm.sendRequest(urlDeVerificacao, function (err, response) {\r",
-                      "        if (err) {\r",
-                      "            return done(err);\r",
-                      "        }\r",
-                      "\r",
-                      "        try {\r",
-                      "            pm.expect(response.code).to.eql(200, \r",
-                      "                `O recurso não foi encontrado (Status: ${response.code})`\r",
-                      "            );\r",
-                      "            console.log(\"Recurso confirmado no banco. Prosseguindo...\");\r",
-                      "            done();\r",
-                      "        } catch (e) {\r",
-                      "            done(e);\r",
-                      "        }\r",
-                      "    });\r",
-                      "});"
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -1452,6 +1415,7 @@
                       "const urlString = pm.request.url.toString();\r",
                       "pm.expect(urlString.endsWith(\"{{pedido_id}}\")).to.be.ok;\r",
                       "});\r",
+                      "\r",
                       "\r",
                       ""
                     ],
