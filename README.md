@@ -2,12 +2,19 @@
 
 # Resumo
 
-Testes de API dos endpoits da aplicação https://petstore.swagger.io e teste E2E do site https://www.saucedemo.com, com
-integração com git hub actions para rodar esses testes a cada commit ou pull do projeto
+Testes de API que cobrem todos os endpoits da aplicação https://petstore.swagger.io e teste E2E do site https://www.saucedemo.com que realizam o fluxo de realização de login, adição de produtos ao carinho e finalização da compra, todo os 2 testes estão integrados em pipelines CI do git hub actions para rodar esses testes a cada commit ou pull do projeto
 
 ## Como Executar Localmente
 
-### 1. Testes de API (Postman/Newman)
+### 1. Clonar o repositorio
+
+```bash
+
+git clone https://github.com/ylapiy/PetShop_Teste.git
+
+```
+
+### 2. Testes de API (Postman/Newman)
 
 É necessário ter o **Node.js** instalado.
 
@@ -19,11 +26,12 @@ npm install -g newman
 newman run Teste_API/Teste_API_PetStore.json -e Teste_API/Env_postman.json --reporters cli
 ```
 
-### 2. Testes de Automação web (Python/Selenium)
+### 3. Testes de Automação web (Python/Selenium)
 
 É necessario ter **python** instalado
 
 ```bash
+
 #instalar o selenium e webdriver
 python -m pip install selenium
 python -m pip install webdriver-manager
@@ -42,7 +50,7 @@ python .\Teste_E2E\scrap.py
 
 ### **Automação Web**
 
-- **Python 3.10**
+- **Python 3.10** : linguagem usada nos teste web
 - **Selenium WebDriver**: ferramenta usada para fazer a automação web
 - **SauceDemo (Swag Labs)**: Site utilizado para os testes de E2E.
 
