@@ -15,7 +15,7 @@
           "name": "Pets",
           "item": [
             {
-              "name": "Adicionar_Pet",
+              "name": "Adicionar_Pet Copy",
               "event": [
                 {
                   "listen": "test",
@@ -30,18 +30,19 @@
                       "propriedades = [\"id\",\"status\"]\r",
                       "\r",
                       "pm.test(\"Verificando se o Body resposta (json) esta ok\", function(){\r",
-                      "    pm.response.to.be.json;\r",
-                      "    const responseData = pm.response.json();\r",
-                      "    const chavesRecebidas = Object.keys(responseData);\r",
-                      "    const propriedadesEsperadas = propriedades;\r",
-                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "   pm.response.to.be.json;\r",
+                      "   const responseData = pm.response.json();    \r",
+                      "   const chavesRecebidas = Object.keys(responseData);\r",
+                      "   const propriedadesEsperadas = propriedades;\r",
+                      "   pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
                       "});\r",
                       "\r",
                       "const jsonData = pm.response.json();\r",
                       "const statusPermitidos = [\"available\", \"pending\", \"sold\"];\r",
                       "pm.test(\"Validar se o status é 'available', 'pending' ou 'sold'\", function () {\r",
                       "    pm.expect(statusPermitidos).to.include(jsonData.status);\r",
-                      "});"
+                      "});\r",
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -62,8 +63,6 @@
                       "    const chavesRecebidas = Object.keys(requestData);\r",
                       "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
                       "})\r",
-                      "\r",
-                      "\r",
                       ""
                     ],
                     "type": "text/javascript",
@@ -80,7 +79,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"id\": 58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito2\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"sold\"\r\n}",
+                  "raw": "{\r\n  \"id\" :58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"sold\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -125,7 +124,6 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "\r",
                       "pm.test(\"Verificando se a URL termina em um ID numérico do pedido\", function(){\r",
                       "const urlString = pm.request.url.toString();\r",
                       "pm.expect(urlString.endsWith(\"{{pet_id}}\")).to.be.ok;\r",
@@ -193,15 +191,23 @@
                       "    pm.expect(urlString).to.include(\"{{pet_id}}/uploadImage\");\r",
                       "});\r",
                       "\r",
-                      "propriedades = [\"file\"]\r",
+                      "const camposParaValidar = [\"file\"]; \r",
                       "\r",
-                      "pm.test(\"Verificando se o Body (FormData) esta ok\", function () {\r",
+                      "pm.test(\"Verificando se o Body (form-data) esta ok\", function() {\r",
                       "    pm.expect(pm.request.body).to.exist;\r",
                       "    pm.expect(pm.request.body.mode).to.eql(\"formdata\");\r",
-                      "    const camposRecebidos = pm.request.body.formdata.map(item => item.key);\r",
-                      "    const propriedadesEsperadas = propriedades;\r",
-                      "    pm.expect(camposRecebidos).to.include.members(propriedadesEsperadas);\r",
-                      "})"
+                      "    const body = pm.request.body.formdata;\r",
+                      "    const camposRecebidos = body.map(item => item.key);\r",
+                      "    pm.expect(camposRecebidos).to.include.members(camposParaValidar);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Verificar se o campo de arquivo não está vazio\", function () {\r",
+                      "    const body = pm.request.body.formdata;\r",
+                      "    const campoArquivo = body.find(item => item.key === 'file');\r",
+                      "    pm.expect(campoArquivo, \"Campo 'documento' não encontrado\").to.exist;\r",
+                      "    pm.expect(campoArquivo.src, \"O arquivo não foi selecionado\").to.not.be.null;\r",
+                      "    pm.expect(campoArquivo.src, \"O caminho do arquivo está vazio\").to.not.be.empty;\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -217,9 +223,9 @@
                   "formdata": [
                     {
                       "key": "file",
-                      "value": "",
-                      "type": "text",
-                      "uuid": "601bd7ee-0423-43be-bc4d-9e35af8ac66c"
+                      "type": "file",
+                      "uuid": "edc1ce16-8187-4599-a459-f05eec730f21",
+                      "src": "grayeye.png"
                     }
                   ]
                 },
@@ -244,7 +250,7 @@
                   "listen": "prerequest",
                   "script": {
                     "exec": [
-                      "const propriedadesEsperadas = [];\r",
+                      "propriedadesEsperadas = [\"id\", \"name\", \"status\", \"photoUrls\", \"category\", \"tags\"]\r",
                       "\r",
                       "pm.test(\"Verificando se o Body (json) esta ok\", function(){\r",
                       "    pm.expect(pm.request.body).to.exist;\r",
@@ -253,7 +259,24 @@
                       "    const requestData = JSON.parse(rawBody);\r",
                       "    const chavesRecebidas = Object.keys(requestData);\r",
                       "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
-                      "});"
+                      "});\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();\r",
+                      "const statusPermitidos = [\"available\", \"pending\", \"sold\"];\r",
+                      "pm.test(\"Validar se o status é 'available', 'pending' ou 'sold'\", function () {\r",
+                      "    pm.expect(statusPermitidos).to.include(jsonData.status);\r",
+                      "});\r",
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -266,7 +289,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"id\": 58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito67\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"oioioi\"\r\n}",
+                  "raw": "{\r\n    \"id\" : {{pet_id}},\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"biscoito67\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"sold\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -297,9 +320,34 @@
                       "pm.expect(urlString.endsWith(\"{{pet_id}}\")).to.be.ok;\r",
                       "});\r",
                       "\r",
-                      "pm.test(\"Verificando se o Body (urlencoded) está ok\", function() {\r",
-                      "            pm.expect(pm.request.body).to.exist;\r",
-                      "            pm.expect(pm.request.body.mode).to.eql(\"urlencoded\");\r",
+                      "const camposParaValidar = [\"name\", \"status\"];\r",
+                      "\r",
+                      "pm.test(\"Verificando se o Body (urlencoded) esta ok\", function() {\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"urlencoded\");\r",
+                      "\r",
+                      "    const camposRecebidos = pm.request.body.urlencoded.map(item => item.key);\r",
+                      "    pm.expect(camposRecebidos).to.include.members(camposParaValidar);\r",
+                      "\r",
+                      "    const body = pm.request.body.urlencoded;\r",
+                      "\r",
+                      "    camposParaValidar.forEach(campo => {\r",
+                      "        const item = body.find(element => element.key === campo);\r",
+                      "        pm.expect(item, `O campo '${campo}' não foi encontrado no body`).to.not.be.undefined;\r",
+                      "        \r",
+                      "        const valor = item.value ? item.value.trim() : \"\";\r",
+                      "        pm.expect(valor, `O campo '${campo}' está vazio`).to.not.be.empty;\r",
+                      "    });\r",
+                      "});\r",
+                      "\r",
+                      "const statusPermitidos = [\"available\", \"pending\", \"sold\"];\r",
+                      "\r",
+                      "pm.test(\"Validar se o status esta nos permitidos\", function () {\r",
+                      "    const body = pm.request.body.urlencoded;\r",
+                      "    \r",
+                      "    const campoStatus = body.find(item => item.key === 'status');\r",
+                      "    pm.expect(campoStatus, \"Campo 'status' não encontrado no body\").to.exist;\r",
+                      "    pm.expect(statusPermitidos).to.include(campoStatus.value);\r",
                       "});"
                     ],
                     "type": "text/javascript",
@@ -313,7 +361,20 @@
                 "header": [],
                 "body": {
                   "mode": "urlencoded",
-                  "urlencoded": []
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "biscoitojr",
+                      "type": "text",
+                      "uuid": "2e066570-dcb6-4125-8537-075a79ce012b"
+                    },
+                    {
+                      "key": "status",
+                      "value": "available",
+                      "type": "text",
+                      "uuid": "312e351d-1761-49b5-9981-e154371cf8dd"
+                    }
+                  ]
                 },
                 "url": {
                   "raw": "{{Url_Base}}/pet/{{pet_id}}",
@@ -394,6 +455,27 @@
                       "pm.test(\"Verificando se a URL termina em um ID numérico do pet\", function(){\r",
                       "const urlString = pm.request.url.toString();\r",
                       "pm.expect(urlString.endsWith(\"{{pet_id}}\")).to.be.ok;\r",
+                      "});\r",
+                      "\r",
+                      "const urlDeVerificacao = \"https://petstore.swagger.io/v2/pet/58902744\";\r",
+                      "\r",
+                      "pm.test(\"Pré-condição: O cachorro deve pelo menos existir no sistema\", function (done) {\r",
+                      "    \r",
+                      "    pm.sendRequest(urlDeVerificacao, function (err, response) {\r",
+                      "        if (err) {\r",
+                      "            return done(err);\r",
+                      "        }\r",
+                      "\r",
+                      "        try {\r",
+                      "            pm.expect(response.code).to.eql(200, \r",
+                      "                `O recurso não foi encontrado (Status: ${response.code})`\r",
+                      "            );\r",
+                      "            console.log(\"Recurso confirmado no banco. Prosseguindo...\");\r",
+                      "            done();\r",
+                      "        } catch (e) {\r",
+                      "            done(e);\r",
+                      "        }\r",
+                      "    });\r",
                       "});"
                     ],
                     "type": "text/javascript",
@@ -424,6 +506,90 @@
                   "path": [
                     "pet",
                     "{{pet_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Adicionar_Pet",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Coletando id da resposta\", () => {\r",
+                      "    const json = pm.response.json();\r",
+                      "    pm.expect(json.id).to.be.a(\"number\");\r",
+                      "    pm.environment.set(\"pet_id\", json.id);\r",
+                      "});\r",
+                      "\r",
+                      "propriedades = [\"id\",\"status\"]\r",
+                      "\r",
+                      "pm.test(\"Verificando se o Body resposta (json) esta ok\", function(){\r",
+                      "   pm.response.to.be.json;\r",
+                      "   const responseData = pm.response.json();    \r",
+                      "   const chavesRecebidas = Object.keys(responseData);\r",
+                      "   const propriedadesEsperadas = propriedades;\r",
+                      "   pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});\r",
+                      "\r",
+                      "const jsonData = pm.response.json();\r",
+                      "const statusPermitidos = [\"available\", \"pending\", \"sold\"];\r",
+                      "pm.test(\"Validar se o status é 'available', 'pending' ou 'sold'\", function () {\r",
+                      "    pm.expect(statusPermitidos).to.include(jsonData.status);\r",
+                      "});\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "propriedades = [\"id\", \"name\", \"status\", \"photoUrls\", \"category\", \"tags\"]\r",
+                      "\r",
+                      "pm.test(\"Verificando se o Body (json) esta ok\", function(){\r",
+                      "    pm.expect(pm.request.body).to.exist;\r",
+                      "    pm.expect(pm.request.body.mode).to.eql(\"raw\");\r",
+                      "    const propriedadesEsperadas = propriedades;\r",
+                      "    const requestData = JSON.parse(pm.request.body.raw);\r",
+                      "    const chavesRecebidas = Object.keys(requestData);\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "})\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {}
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\" :58902744,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": 121212,\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"sold\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{Url_Base}}/pet",
+                  "host": [
+                    "{{Url_Base}}"
+                  ],
+                  "path": [
+                    "pet"
                   ]
                 }
               },
@@ -562,6 +728,17 @@
                       "        pm.expect(user, `Erro no usuário de índice ${index}`).to.have.all.keys(camposObrigatorios);\r",
                       "    });\r",
                       "});\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
                       ""
                     ],
                     "type": "text/javascript",
@@ -807,7 +984,28 @@
                       "    const camposRecebidos = pm.request.body.formdata.map(item => item.key);\r",
                       "    const propriedadesEsperadas = propriedades;\r",
                       "    pm.expect(camposRecebidos).to.include.members(propriedadesEsperadas);\r",
-                      "})"
+                      "})\r",
+                      "\r",
+                      "const urlDeVerificacao = \"https://petstore.swagger.io/v2/user/tipatpio\";\r",
+                      "\r",
+                      "pm.test(\"Pré-condição: O usuario deve pelo menos existir no sistema\", function (done) {\r",
+                      "    \r",
+                      "    pm.sendRequest(urlDeVerificacao, function (err, response) {\r",
+                      "        if (err) {\r",
+                      "            return done(err);\r",
+                      "        }\r",
+                      "\r",
+                      "        try {\r",
+                      "            pm.expect(response.code).to.eql(200, \r",
+                      "                `O recurso não foi encontrado (Status: ${response.code})`\r",
+                      "            );\r",
+                      "            console.log(\"Recurso confirmado no banco. Prosseguindo...\");\r",
+                      "            done();\r",
+                      "        } catch (e) {\r",
+                      "            done(e);\r",
+                      "        }\r",
+                      "    });\r",
+                      "});"
                     ],
                     "type": "text/javascript",
                     "packages": {},
@@ -826,6 +1024,21 @@
                       "    const chavesRecebidas = Object.keys(responseData);\r",
                       "    const propriedadesEsperadas = propriedades;\r",
                       "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});\r",
+                      "\r",
+                      "\r",
+                      "pm.test(\"Extrair apenas o ID da sessão da resposta\", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    const mensagemCompleta = jsonData.message;\r",
+                      "    const apenasNumeros = mensagemCompleta.match(/\\d+/g);\r",
+                      "\r",
+                      "    if (apenasNumeros) {\r",
+                      "        const sessionId = apenasNumeros[0];\r",
+                      "        pm.environment.set(\"session_id\", sessionId);\r",
+                      "        console.log(\"ID da sessão extraído:\", sessionId);\r",
+                      "    } else {\r",
+                      "        pm.expect.fail(\"Não foi possível encontrar números na mensagem\");\r",
+                      "    }\r",
                       "});"
                     ],
                     "type": "text/javascript",
@@ -925,6 +1138,27 @@
                       "pm.test(\"Verificando se a URL termina em um nome de usuario\", function(){\r",
                       "const urlString = pm.request.url.toString();\r",
                       "pm.expect(urlString.endsWith(\"{{user_nome}}\")).to.be.ok;\r",
+                      "});\r",
+                      "\r",
+                      "const urlDeVerificacao = \"https://petstore.swagger.io/v2/user/tipatpio\";\r",
+                      "\r",
+                      "pm.test(\"Pré-condição: O usuario deve pelo menos existir no sistema\", function (done) {\r",
+                      "    \r",
+                      "    pm.sendRequest(urlDeVerificacao, function (err, response) {\r",
+                      "        if (err) {\r",
+                      "            return done(err);\r",
+                      "        }\r",
+                      "\r",
+                      "        try {\r",
+                      "            pm.expect(response.code).to.eql(200, \r",
+                      "                `O recurso não foi encontrado (Status: ${response.code})`\r",
+                      "            );\r",
+                      "            console.log(\"Recurso confirmado no banco. Prosseguindo...\");\r",
+                      "            done();\r",
+                      "        } catch (e) {\r",
+                      "            done(e);\r",
+                      "        }\r",
+                      "    });\r",
                       "});"
                     ],
                     "type": "text/javascript",
@@ -1082,6 +1316,28 @@
                       "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
                       "});\r",
                       "\r",
+                      "\r",
+                      "const urlDeVerificacao = \"https://petstore.swagger.io/v2/pet/58902744\";\r",
+                      "\r",
+                      "pm.test(\"Pré-condição: O cachorro deve pelo menos existir no sistema\", function (done) {\r",
+                      "    \r",
+                      "    pm.sendRequest(urlDeVerificacao, function (err, response) {\r",
+                      "        if (err) {\r",
+                      "            return done(err);\r",
+                      "        }\r",
+                      "\r",
+                      "        try {\r",
+                      "            pm.expect(response.code).to.eql(200, \r",
+                      "                `O recurso não foi encontrado (Status: ${response.code})`\r",
+                      "            );\r",
+                      "            console.log(\"Recurso confirmado no banco. Prosseguindo...\");\r",
+                      "            done();\r",
+                      "        } catch (e) {\r",
+                      "            done(e);\r",
+                      "        }\r",
+                      "    });\r",
+                      "});\r",
+                      "\r",
                       ""
                     ],
                     "type": "text/javascript",
@@ -1136,6 +1392,31 @@
                     "packages": {},
                     "requests": {}
                   }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const propriedadesEsperadas = [\r",
+                      "    \"id\", \r",
+                      "    \"petId\", \r",
+                      "    \"quantity\", \r",
+                      "    \"shipDate\", \r",
+                      "    \"status\", \r",
+                      "    \"complete\"\r",
+                      "];\r",
+                      "\r",
+                      "pm.test(\"Verificando se o Body resposta (json) esta ok\", function(){\r",
+                      "    pm.response.to.be.json;\r",
+                      "    const responseData = pm.response.json();\r",
+                      "    const chavesRecebidas = Object.keys(responseData);\r",
+                      "    pm.expect(chavesRecebidas).to.include.members(propriedadesEsperadas);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
                 }
               ],
               "request": {
@@ -1170,7 +1451,9 @@
                       "pm.test(\"Verificando se a URL termina em um ID numérico do pedido\", function(){\r",
                       "const urlString = pm.request.url.toString();\r",
                       "pm.expect(urlString.endsWith(\"{{pedido_id}}\")).to.be.ok;\r",
-                      "});"
+                      "});\r",
+                      "\r",
+                      ""
                     ],
                     "type": "text/javascript",
                     "packages": {},
