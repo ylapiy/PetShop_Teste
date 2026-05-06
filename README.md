@@ -7,7 +7,7 @@ integração com git hub actions para rodar esses testes a cada commit ou pull d
 
 ## Como Executar Localmente
 
-### 1. Testes de API
+### 1. Testes de API (Postman/Newman)
 
 É necessário ter o **Node.js** instalado.
 
@@ -19,7 +19,7 @@ npm install -g newman
 newman run Teste_API/Teste_API_PetStore.json -e Teste_API/Env_postman.json --reporters cli
 ```
 
-### 2. Testes de Automação web (Postman/Newman)
+### 2. Testes de Automação web (Python/Selenium)
 
 É necessario ter **python** instalado
 
